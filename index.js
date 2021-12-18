@@ -1,4 +1,4 @@
-const cb = require("coinbase-pro")
+const cb = require("coinbase-pro")                                                                                                                                                                   [0/1229]
 require('dotenv').config()
 
 const key = process.env.API_KEY;
@@ -7,14 +7,8 @@ const passphrase = process.env.PASSPHRASE;
 const apiURI = 'https://api.pro.coinbase.com';
 
 let ETHEREUM_SPEND = parseInt(process.env.ETHEREUM_SPEND)
-if (Number.isNaN(ETHEREUM_SPEND)) {
-  ETHEREUM_SPEND = 50 // $50 dollars worth
-}
 
 let BITCOIN_SPEND = parseInt(process.env.BITCOIN_SPEND)
-if (Number.isNaN(BITCOIN_SPEND)) {
-  BITCOIN_SPEND = 50 // $50 dollars worth
-}
 
 const authedClient = new cb.AuthenticatedClient(
   key,
@@ -24,8 +18,12 @@ const authedClient = new cb.AuthenticatedClient(
 );
 
 const main = async () => {
-  await purchase("ETH-USD", ETHEREUM_SPEND)
-  await purchase("BTC-USD", BITCOIN_SPEND)
+  if (!Number.isNaN(ETHEREUM_SPEND)) {
+    await purchase("ETH-USD", ETHEREUM_SPEND)
+  }
+  if (!Number.isNaN(BITCOIN_SPEND)) {
+    await purchase("BTC-USD", BITCOIN_SPEND)
+  }
 }
 
 const purchase = async (productTickerString, spentAmountInDollars) => {
