@@ -1,3 +1,5 @@
+#! /app/.heroku/node/bin/node
+
 const cb = require("coinbase-pro")                                                                                                                                                                   [0/1229]
 require('dotenv').config()
 
@@ -17,7 +19,7 @@ const authedClient = new cb.AuthenticatedClient(
   apiURI
 );
 
-module.exports = async () => {
+const main = async () => {
   if (!Number.isNaN(ETHEREUM_SPEND)) {
     await purchase("ETH-USD", ETHEREUM_SPEND)
   }
@@ -50,3 +52,5 @@ const purchase = async (productTickerString, spentAmountInDollars) => {
   const resp = await authedClient.placeOrder(params);
   JSON.stringify(resp, null, 2)
 }
+
+main()
