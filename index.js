@@ -6,6 +6,8 @@ const secret = process.env.API_SECRET;
 const passphrase = process.env.PASSPHRASE;
 const apiURI = 'https://api.pro.coinbase.com';
 
+console.log(`passphrase first letter ${passphrase[0]}`)
+
 let ETHEREUM_SPEND = parseInt(process.env.ETHEREUM_SPEND)
 
 let BITCOIN_SPEND = parseInt(process.env.BITCOIN_SPEND)
