@@ -19,7 +19,7 @@ const authedClient = new cb.AuthenticatedClient(
   apiURI
 );
 
-const main = async () => {
+module.exports = async () => {
   if (!Number.isNaN(ETHEREUM_SPEND)) {
     await purchase("ETH-USD", ETHEREUM_SPEND)
   }
@@ -52,5 +52,3 @@ const purchase = async (productTickerString, spentAmountInDollars) => {
   const resp = await authedClient.placeOrder(params);
   JSON.stringify(resp, null, 2)
 }
-
-main()
