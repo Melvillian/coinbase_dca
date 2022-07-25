@@ -1,6 +1,6 @@
 #! /app/.heroku/node/bin/node
 
-const cb = require("coinbase-pro")                                                                                                                                                                   [0/1229]
+const cb = require("coinbase-pro")
 require('dotenv').config()
 
 const key = process.env.API_KEY;
