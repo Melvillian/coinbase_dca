@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "coinbase-dca"
+version = "0.1.0"
+description = ""
+authors = ["Alex Melville"]
+# readme = "README.md"
+# license = "BSD"
+packages = [{ include = "coinbase-dca" }]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31.0"
+
+[tool.poetry.scripts]
+main = "coinbase-dca.main:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

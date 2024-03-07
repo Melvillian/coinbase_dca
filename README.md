@@ -1,1 +1,1 @@
-# Dollar Cost Averaging Bot using Coinbase Pro
+# Dollar Cost Averaging Bot
