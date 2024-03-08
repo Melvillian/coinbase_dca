@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "coinbase-dca"
+name = "coinbase_dca"
 version = "0.1.0"
 description = ""
 authors = ["Alex Melville"]
 # readme = "README.md"
 # license = "BSD"
-packages = [{ include = "coinbase-dca" }]
+packages = [{ include = "coinbase_dca" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -14,7 +14,7 @@ coinbase-advanced-py = "^1.1.3"
 python-dotenv = "^1.0.1"
 
 [tool.poetry.scripts]
-main = "coinbase-dca.main:main"
+main = "coinbase_dca.main:main"
 
 [build-system]
 requires = ["poetry-core"]
