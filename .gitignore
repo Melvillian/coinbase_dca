@@ -2,3 +2,6 @@
 __pycache__/
 # nix build output
 result
+
+build/
+dist/

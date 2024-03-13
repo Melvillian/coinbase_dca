@@ -19,3 +19,7 @@ main = "coinbase_dca.main:main"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry-pyinstaller-plugin.scripts]
+# Single file bundled in wheel
+main = { source = "coinbase_dca/main.py", type = "onefile", bundle = true }

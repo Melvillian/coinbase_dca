@@ -22,7 +22,7 @@ def dollar_cost_averaging_sell(client, product_id, amount_to_sell_in_usd):
     # use the current day as the client_order_id, which will ensure
     # we only make 1 market order per day as long as the
     # client_order_id's follow this format
-    client_order_id = f"{product_id}-{datetime.now().strftime("%Y-%m-%d")}"
+    client_order_id = f"{product_id}-{datetime.now().strftime('%Y-%m-%d')}"
 
     # make the sell order. If we've already tried to make an order
     # at for this day, it will fail. This adds a simple defense against
@@ -40,3 +40,7 @@ def main():
     # sell $500's worth of BTC
     dollar_cost_averaging_sell(client, "BTC-USD", 500)
     dollar_cost_averaging_sell(client, "ETH-USD", 500)
+
+
+if __name__ == "__main__":
+    main()

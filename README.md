@@ -1,6 +1,6 @@
 # Dollar Cost Averaging Bot
 
-A simple bot that uses the
+A simple DCA (dollar cost averaging) bot that uses the
 [Coinbase Python SDK](https://docs.cloud.coinbase.com/advanced-trade-api/docs/sdk-overview)
 to executes a sell of a product (e.g. `"BTC-USD"`) for some amount of USD (e.g.
 `$500`). It is expected that you will run this in some sort of cron job so that
@@ -28,6 +28,30 @@ it runs every day (or whatever interval you want).
 
 5. Finally, execute the bot with `poetry run main`. Currently this will sell
    $500 worth of both `"ETH-USD"` and `"BTC-USD"`
+
+## Building A Single Binary Executable, Suitable For A Cron Job
+
+On its own this script cannot implement DCA, because to correctly do DCA you
+need to sell/buy at a fixed interval (such as once a day) over a long time
+period. In order to make that as easy as possible, we can build a single binary
+executable that can be run directly by a cron job.
+
+### Steps
+
+1. Add the poetry pyinstaller plugin so you can easily build an executable
+   binary from the `coinbase_dca/main.py` script:
+   `poetry self add poetry-pyinstaller-plugin`
+
+2. Run `poetry build`, and an executable will be created at
+   `/dist/pyinstaller/macosx_14_0_arm64/main`. Note: you may see a different
+   directory than `macosx_14_0_arm64/` depending on what OS and architecture you
+   are using.
+
+3. Finally, create a cron job (using either
+   [cron](https://phoenixnap.com/kb/set-up-cron-job-linux) or
+   [launchd](https://alvinalexander.com/mac-os-x/mac-osx-startup-crontab-launchd-jobs/)
+   if you're using a Mac) and point it at the binary you created using
+   `poetry build`
 
 ## TODO
 
