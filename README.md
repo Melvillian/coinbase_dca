@@ -11,7 +11,11 @@ it runs every day (or whatever interval you want).
 1. Create an account on Coinbase and create an API key and secret,
    [which you can do here](https://cloud.coinbase.com/access/api). Make sure you
    generate a "Trading Key", not a "General Key", because Trading Keys are the
-   new authentication system that Coinbase uses
+   new authentication system that Coinbase uses. Also note that you will need to
+   provide an IP address (or IP address range) from which this script is allowed
+   to execute. I have used [WhatsMyIp](https://whatismyipaddress.com/) to get my
+   local IP address, but I'm aware that my ISP may change that IP address at any
+   time. c'est la vie.
 
 2. Once you have the `API_KEY` and `API_SECRET`, run `cp .env.example .env` and
    fill in your API key + secret info. Note, currently the bot only sells, there
