@@ -11,6 +11,8 @@ api_secret = os.getenv("API_SECRET")
 
 
 def dollar_cost_averaging_sell(client, product_id, amount_to_sell_in_usd):
+    """Sell a given USD amount of a product (e.g. BTC-USD) at market price"""
+
     # get best bid for product (e.g. "BTC-USD")
     bid_ask_spread = client.get_best_bid_ask(product_id)
     best_bid = float(bid_ask_spread["pricebooks"][0]["bids"][0]["price"])
@@ -19,18 +21,22 @@ def dollar_cost_averaging_sell(client, product_id, amount_to_sell_in_usd):
     # amount to sell (measured in e.g. USD)
     amount_to_sell_in_base_currency = f"{(amount_to_sell_in_usd / best_bid):.5f}"
 
-    # use the current day as the client_order_id, which will ensure
-    # we only make 1 market order per day as long as the
+    # To make the unique client_order_id, we use the combination of product id
+    # (e.g. "BTC-USD") concatenated with the  current day as the , which will
+    # ensure we only make 1 market order per day per product_id as long as the
     # client_order_id's follow this format
     client_order_id = f"{product_id}-{datetime.now().strftime('%Y-%m-%d')}"
 
     # make the sell order. If we've already tried to make an order
-    # at for this day, it will fail. This adds a simple defense against
-    # the script making multiple orders and selling too much
+    # for this product_id and day, it will fail. This adds a simple defense
+    # against the script making multiple orders and selling too much
     resp = client.market_order_sell(
         client_order_id, product_id, amount_to_sell_in_base_currency
     )
 
+    # log the current time and order data so we can debug if needed
+    now = datetime.now()
+    print(now.strftime("%Y-%m-%d %H:%M:%S"))
     print(dumps(resp, indent=2))
 
 
