@@ -44,9 +44,13 @@ executable that can be run directly by a cron job.
 
 2. Because Pyinstaller doesn't handle packaging env vars in a nice way, we're
    going to be hacky and do it manually (see TODO to automate this). In
-   `coinbase_dca/main.py`, replace `api_key = os.getenv("API_KEY")` with
+   `coinbase_dca/main.py`:
+
+   i) Replace `api_key = os.getenv("API_KEY")` with
    `api_key = "organizations/4dbcecc6***96bbc393c"` but use your actual
-   `API_KEY` env var. Replace `api_secret = os.getenv("API_SECRET")` with
+   `API_KEY` env var.
+
+   ii) Replace `api_secret = os.getenv("API_SECRET")` with
    `api_secret = "-----BEGIN EC PRIVATE KEY-----\nMHcC***QQ0j063g==\n-----END EC PRIVATE KEY-----\n"`
    but use your actual `API_SECRET` env var.
 
@@ -60,8 +64,7 @@ executable that can be run directly by a cron job.
 5. Finally, create a cron job (using either
    [cron](https://phoenixnap.com/kb/set-up-cron-job-linux) or
    [launchd](https://alvinalexander.com/mac-os-x/mac-osx-startup-crontab-launchd-jobs/)
-   if you're using a Mac) and point it at the binary you created using
-   `poetry build`
+   if you're using a Mac) and point it at the binary you created in step 3.
 
 ## TODO
 
