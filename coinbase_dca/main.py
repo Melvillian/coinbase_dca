@@ -45,7 +45,6 @@ def main():
 
     # sell $500's worth of BTC
     dollar_cost_averaging_sell(client, "BTC-USD", 500)
-    dollar_cost_averaging_sell(client, "ETH-USD", 500)
 
 
 if __name__ == "__main__":
