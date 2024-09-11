@@ -187,18 +187,18 @@ files = [
 
 [[package]]
 name = "coinbase-advanced-py"
-version = "1.1.3"
+version = "1.6.2"
 description = "Coinbase Advanced API Python SDK"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "coinbase-advanced-py-1.1.3.tar.gz", hash = "sha256:0265ab37d93cf417c48413e37a1e8aefa92301959c376d19ce9a9a4e4c7695df"},
-    {file = "coinbase_advanced_py-1.1.3-py3-none-any.whl", hash = "sha256:3992e6cda117a005b2f06a25eb6bd391b706b616627e9b4a03fe0f39ca34e68f"},
+    {file = "coinbase-advanced-py-1.6.2.tar.gz", hash = "sha256:6d897b83f060e657e4aedb4ea73a284230db3e00f822d19cbb4bad9fb1aeb46c"},
+    {file = "coinbase_advanced_py-1.6.2-py3-none-any.whl", hash = "sha256:5b9539712800856b29bb49a814cc312b6271baed4c5a31a41ea3d663340ecdbd"},
 ]
 
 [package.dependencies]
 backoff = ">=2.2.1"
-cryptography = ">=42.0.0"
+cryptography = ">=42.0.4"
 PyJWT = ">=2.8.0"
 requests = ">=2.31.0"
 websockets = ">=12.0"
@@ -435,4 +435,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "9b7a68e266478cabf068e33d168e801d16207cbbdb84b0823de35cffc15e00a7"
+content-hash = "40eb820d83ab80f4f4fc4f86a1596a4d8d7a5cc1f81844ad5474614ef06392cc"
