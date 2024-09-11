@@ -3,5 +3,7 @@ __pycache__/
 # nix build output
 result
 
+# pyinstaller build output
 build/
 dist/
+main.spec

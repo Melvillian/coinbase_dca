@@ -42,9 +42,7 @@ executable that can be run directly by a cron job.
 
 ### Steps
 
-1. Add the poetry pyinstaller plugin so you can easily build an executable
-   binary from the `coinbase_dca/main.py` script:
-   `poetry self add poetry-pyinstaller-plugin`
+1. Install [pyinstaller](https://pyinstaller.org/en/stable/installation.html)
 
 2. Because Pyinstaller doesn't handle packaging env vars in a nice way, we're
    going to be hacky and do it manually (see TODO to automate this). In
@@ -58,10 +56,7 @@ executable that can be run directly by a cron job.
    `api_secret = "-----BEGIN EC PRIVATE KEY-----\nMHcC***QQ0j063g==\n-----END EC PRIVATE KEY-----\n"`
    but use your actual `API_SECRET` env var.
 
-3. Run `poetry build`, and an executable will be created at
-   `/dist/pyinstaller/macosx_14_0_arm64/main`. Note: you may see a different
-   directory than `macosx_14_0_arm64/` depending on what OS and architecture you
-   are using.
+3. From the project root, run `pyinstaller -F coinbase_dca/main.py`. This will create a single executable at `dist/main`.
 
 4. Undue the manual changes you made to your env vars in step 2.
 
