@@ -72,7 +72,7 @@ executable that can be run directly by a cron job.
 
 ## TODO
 
-- [ ] Add the ability to buy crypto with a function called
+- [X] Add the ability to buy crypto with a function called
       `dollar_cost_averaging_buy`
 - [ ] Add script for automatically adding the env vars to the script pre-build
       and removing them from the script post-build
