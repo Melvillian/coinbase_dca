@@ -44,30 +44,15 @@ executable that can be run directly by a cron job.
 
 1. Install [pyinstaller](https://pyinstaller.org/en/stable/installation.html)
 
-2. Because Pyinstaller doesn't handle packaging env vars in a nice way, we're
-   going to be hacky and do it manually (see TODO to automate this). In
-   `coinbase_dca/main.py`:
+2. From the project root, run `pyinstaller --add-data=".env:." --onefile coinbase_dca/main.py`. This will create a single executable at `dist/main`, which you can run from anywhere using `/path/to/dist/main`.
 
-   i) Replace `api_key = os.getenv("API_KEY")` with
-   `api_key = "organizations/4dbcecc6***96bbc393c"` but use your actual
-   `API_KEY` env var.
-
-   ii) Replace `api_secret = os.getenv("API_SECRET")` with
-   `api_secret = "-----BEGIN EC PRIVATE KEY-----\nMHcC***QQ0j063g==\n-----END EC PRIVATE KEY-----\n"`
-   but use your actual `API_SECRET` env var.
-
-3. From the project root, run `pyinstaller -F coinbase_dca/main.py`. This will create a single executable at `dist/main`.
-
-4. Undue the manual changes you made to your env vars in step 2.
-
-5. Finally, create a cron job (using either
+3. Finally, create a cron job (using either
    [cron](https://phoenixnap.com/kb/set-up-cron-job-linux) or
    [launchd](https://alvinalexander.com/mac-os-x/mac-osx-startup-crontab-launchd-jobs/)
-   if you're using a Mac) and point it at the binary you created in step 3.
+   if you're using a Mac) and point it at the binary you created in step 2.
 
 ## TODO
 
 - [X] Add the ability to buy crypto with a function called
       `dollar_cost_averaging_buy`
-- [ ] Add script for automatically adding the env vars to the script pre-build
-      and removing them from the script post-build
+- [X] Figure out how to make an easy build process that included the env vars in the final binary

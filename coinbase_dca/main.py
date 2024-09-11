@@ -1,11 +1,32 @@
 from coinbase.rest import RESTClient
 from dotenv import load_dotenv
 import os
+import sys
 from json import dumps
 from datetime import datetime
 
 
-load_dotenv()
+# This opaque looking function handles the vagaries of how Pyinstaller deals with bundling the .env
+# file when it creats a --onefile single binary executable.
+# To understand more you can read:
+# https://gist.github.com/Shrestha7/ecc6cf8b4506ca3901a0542ad82c1cda
+# https://github.com/theskumar/python-dotenv/issues/259
+def handle_bundled_load_dotenv():
+    # Determine if the application is running in a bundled executable
+    if getattr(sys, "frozen", False):
+        # If it's running as a bundled executable, use this path
+        application_path = sys._MEIPASS
+    else:
+        # If it's running as a normal Python script, use this path
+        application_path = os.path.dirname(os.path.abspath(__file__))
+
+    # Construct the path to the .env file
+    dotenv_path = os.path.join(application_path, ".env")
+
+    load_dotenv(dotenv_path)
+
+
+handle_bundled_load_dotenv()
 api_key = os.getenv("API_KEY")
 api_secret = os.getenv("API_SECRET")
 
