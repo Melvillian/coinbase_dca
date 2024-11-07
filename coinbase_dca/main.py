@@ -42,6 +42,18 @@ def dollar_cost_averaging_sell(client, product_id, amount_to_sell_in_usd):
     # client_order_id's follow this format
     client_order_id = f"{product_id}-{datetime.now().strftime('%Y-%m-%d')}"
 
+    # for sells we need to use supply the amount of the first asset
+    # in the product id (e.g. "BTC" in "BTC-USD") as the "base_size".
+    # This is different from `dollar_cost_averaging_buy` where we need to
+    # supply the amount of the second asset in the product id (e.g. "USD" in "BTC-USD")
+    # as the "quote_size"
+
+    # use the coinbase python sdk to fetch the current price of BTC in USD
+    resp = client.get_product_ticker(product_id)
+    price_of_btc_in_usd = float(resp["price"])
+    amount_to_sell_in_btc = float(amount_to_sell_in_usd) / price_of_btc_in_usd
+    amount_to_sell_in_btc = str(amount_to_sell_in_btc)
+
     # make the sell order. If we've already tried to make an order
     # for this product_id and day, it will simply return the existing
     # order information. This adds a simple defense against the script
@@ -88,7 +100,7 @@ def dollar_cost_averaging_buy(client, product_id, amount_to_buy_in_usd):
 def main():
     client = RESTClient(api_key=api_key, api_secret=api_secret)
 
-    # buy the coin
+    # sell the coin
     dollar_cost_averaging_sell(client, "BTC-USD", 2000)
 
 
