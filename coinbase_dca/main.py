@@ -33,7 +33,7 @@ api_secret = os.getenv("API_SECRET")
 
 def dollar_cost_averaging_sell(client, product_id, amount_to_sell_in_usd):
     """Sell a given USD amount of a product (e.g. BTC-USD) at market price"""
-    assert amount_to_sell_in_usd < 10_000  # limit the damage that can be done
+    assert amount_to_sell_in_usd <= 10_000  # limit the damage that can be done
     amount_to_sell_in_usd = str(amount_to_sell_in_usd)
 
     # To make the unique client_order_id, we use the combination of product id
@@ -103,7 +103,7 @@ def main():
     client = RESTClient(api_key=api_key, api_secret=api_secret)
 
     # sell the coin
-    dollar_cost_averaging_sell(client, "BTC-USD", 2000)
+    dollar_cost_averaging_sell(client, "BTC-USD", 10_000)
 
 
 if __name__ == "__main__":
