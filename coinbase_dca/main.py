@@ -49,10 +49,12 @@ def dollar_cost_averaging_sell(client, product_id, amount_to_sell_in_usd):
     # as the "quote_size"
 
     # use the coinbase python sdk to fetch the current price of BTC in USD
-    resp = client.get_product_ticker(product_id)
-    price_of_btc_in_usd = float(resp["price"])
-    amount_to_sell_in_btc = float(amount_to_sell_in_usd) / price_of_btc_in_usd
-    amount_to_sell_in_btc = str(amount_to_sell_in_btc)
+    resp = client.get_product(product_id)
+    price_of_crypto_asset_in_usd = float(resp["price"])
+    amount_to_sell_in_crypto_asset = "{:.6f}".format(  # round to 6 decimal places
+        float(amount_to_sell_in_usd) / price_of_crypto_asset_in_usd
+    )
+    amount_to_sell_in_crypto_asset = str(amount_to_sell_in_crypto_asset)
 
     # make the sell order. If we've already tried to make an order
     # for this product_id and day, it will simply return the existing
@@ -61,7 +63,7 @@ def dollar_cost_averaging_sell(client, product_id, amount_to_sell_in_usd):
     resp = client.market_order_sell(
         client_order_id=client_order_id,
         product_id=product_id,
-        quote_size=amount_to_sell_in_usd,
+        base_size=amount_to_sell_in_crypto_asset,
     )
 
     # log the current time and order data so we can debug if needed
