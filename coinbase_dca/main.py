@@ -89,8 +89,7 @@ def main():
     client = RESTClient(api_key=api_key, api_secret=api_secret)
 
     # buy the coin
-    dollar_cost_averaging_buy(client, "BTC-USD", 100)
-    dollar_cost_averaging_buy(client, "ETH-USD", 300)
+    dollar_cost_averaging_sell(client, "BTC-USD", 2000)
 
 
 if __name__ == "__main__":
