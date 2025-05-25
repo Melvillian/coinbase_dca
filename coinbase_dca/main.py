@@ -26,11 +26,6 @@ def handle_bundled_load_dotenv():
     load_dotenv(dotenv_path)
 
 
-handle_bundled_load_dotenv()
-api_key = os.getenv("API_KEY")
-api_secret = os.getenv("API_SECRET")
-
-
 def dollar_cost_averaging_sell(client, product_id, amount_to_sell_in_usd):
     """Sell a given USD amount of a product (e.g. BTC-USD) at market price"""
     assert amount_to_sell_in_usd <= 10_000  # limit the damage that can be done
@@ -102,9 +97,30 @@ def dollar_cost_averaging_buy(client, product_id, amount_to_buy_in_usd):
 def main():
     client = RESTClient(api_key=api_key, api_secret=api_secret)
 
-    # sell the coin
-    dollar_cost_averaging_sell(client, "BTC-USD", 10_000)
+    if is_buy == "true":
+        # buy the coin
+        dollar_cost_averaging_buy(client, ticker, dollar_amount)
+    elif is_buy == "false":
+        # sell the coin
+        dollar_cost_averaging_sell(client, ticker, dollar_amount)
+    else:
+        raise ValueError(
+            f"Invalid value for IS_BUY: '{is_buy}'. Value must be true or false"
+        )
 
+
+handle_bundled_load_dotenv()
+api_key = os.getenv("API_KEY")
+api_secret = os.getenv("API_SECRET")
+ticker = os.getenv("TICKER")
+dollar_amount_str = os.getenv("DOLLAR_AMOUNT")
+if dollar_amount_str is not None:
+    dollar_amount = int(dollar_amount_str)
+else:
+    raise ValueError(
+        f"Invalid value for DOLLAR_AMOUNT: '{dollar_amount_str}'. Value must be an integer"
+    )
+is_buy = os.getenv("IS_BUY")
 
 if __name__ == "__main__":
     main()

@@ -39,19 +39,16 @@ need to sell/buy at a fixed interval (such as once a day) over a long time
 period. In order to make that as easy as possible, we can build a single binary
 executable that can be run directly by a cron job (or Mac's equivalent, launchd).
 
-### Steps
+### Build Steps
 
 1. Install [pyinstaller](https://pyinstaller.org/en/stable/installation.html) with `pip install pyinstaller`
 
 2. From the project root, run `pyinstaller --add-data=".env:." --onefile coinbase_dca/main.py`. This will create a single executable at `dist/main`, which you can run from anywhere using `/path/to/dist/main`.
 
-3. Finally, create a cron job (using either
-   [cron](https://phoenixnap.com/kb/set-up-cron-job-linux) or
-   [launchd](https://alvinalexander.com/mac-os-x/mac-osx-startup-crontab-launchd-jobs/)
-   if you're using a Mac) and point it at the binary you created in step 2.
+3. Finally, execute your buy/sell periodically using either
 
-## TODO
-
-- [X] Add the ability to buy crypto with a function called
-      `dollar_cost_averaging_buy`
-- [X] Figure out how to make an easy build process that included the env vars in the final binary
+   - [cron](https://phoenixnap.com/kb/set-up-cron-job-linux) if on Linux
+   - [launchd](https://alvinalexander.com/mac-os-x/mac-osx-startup-crontab-launchd-jobs/) if you're using a Mac
+      
+      - tl;dr: make a plist file, and then run `launchctl load /path/to/file.plist`
+   - 🤷 if you're on Windows
