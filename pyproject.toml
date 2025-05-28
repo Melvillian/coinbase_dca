@@ -5,7 +5,6 @@ description = ""
 authors = ["Alex Melville"]
 # readme = "README.md"
 # license = "BSD"
-packages = [{ include = "coinbase_dca" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"

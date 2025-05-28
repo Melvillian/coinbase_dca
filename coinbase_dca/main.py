@@ -17,8 +17,9 @@ def handle_bundled_load_dotenv():
         # If it's running as a bundled executable, use this path
         application_path = sys._MEIPASS
     else:
-        # If it's running as a normal Python script, use this path
-        application_path = os.path.dirname(os.path.abspath(__file__))
+        # If it's running as a normal Python script, use the project root directory
+        # Go up two levels from the module's location to reach the project root
+        application_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     # Construct the path to the .env file
     dotenv_path = os.path.join(application_path, ".env")
@@ -95,6 +96,19 @@ def dollar_cost_averaging_buy(client, product_id, amount_to_buy_in_usd):
 
 
 def main():
+    handle_bundled_load_dotenv()
+    api_key = os.getenv("API_KEY")
+    api_secret = os.getenv("API_SECRET")
+    ticker = os.getenv("TICKER")
+    dollar_amount_str = os.getenv("DOLLAR_AMOUNT")
+    is_buy = os.getenv("IS_BUY")
+    if dollar_amount_str is not None:
+        dollar_amount = int(dollar_amount_str)
+    else:
+        raise ValueError(
+            f"Invalid value for DOLLAR_AMOUNT: '{dollar_amount_str}'. Value must be an integer"
+        )
+
     client = RESTClient(api_key=api_key, api_secret=api_secret)
 
     if is_buy == "true":
@@ -108,19 +122,6 @@ def main():
             f"Invalid value for IS_BUY: '{is_buy}'. Value must be true or false"
         )
 
-
-handle_bundled_load_dotenv()
-api_key = os.getenv("API_KEY")
-api_secret = os.getenv("API_SECRET")
-ticker = os.getenv("TICKER")
-dollar_amount_str = os.getenv("DOLLAR_AMOUNT")
-if dollar_amount_str is not None:
-    dollar_amount = int(dollar_amount_str)
-else:
-    raise ValueError(
-        f"Invalid value for DOLLAR_AMOUNT: '{dollar_amount_str}'. Value must be an integer"
-    )
-is_buy = os.getenv("IS_BUY")
 
 if __name__ == "__main__":
     main()

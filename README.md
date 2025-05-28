@@ -12,9 +12,9 @@ it runs every day (or whatever interval you want).
 
 Create an account on Coinbase and create an API key and secret, [which you can do here](https://portal.cdp.coinbase.com/access/api). Make sure you generate a "Trading Key", not a "General Key", because Trading Keys are the new authentication system that Coinbase uses.
 
-You will need to provide an IP address (or IP address range) from which this script is allowed to execute. You have two options, 1 much easier but less secure, and 2 secure but much harder:
+You can provide an IP address (or IP address range) from which this script is allowed to execute. You have two options, 1 much easier but less secure, and 2 secure but much harder:
 
-1. Use an IP whitelist of `0.0.0.0/0`, which will allow any IP address to access the API. Obviously if your API key is discovered by attackers (because you commit it to a public repo, or your local machine is compromised) you could have all of your coin sold for some shitcoin. So beware of this option.
+1. Don't set a value, which will allow any IP address to access the API. Obviously if your API key is discovered by attackers (because you commit it to a public repo, or your local machine is compromised) you could have all of your coin sold for some shitcoin. So beware of this option.
    
 2. Setup a VPN with a static IP and run your script from there. I don't do this because it's complicated and I secure my local machine well enough
 
@@ -46,6 +46,5 @@ On its own this script cannot implement DCA, because to correctly do DCA you nee
 
    - [cron](https://phoenixnap.com/kb/set-up-cron-job-linux) if on Linux
    - [launchd](https://alvinalexander.com/mac-os-x/mac-osx-startup-crontab-launchd-jobs/) if you're using a Mac
-      
-      - tl;dr: make a plist file, and then run `launchctl load /path/to/file.plist`
+      - tl;dr: make a plist file, and then run `launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/your.plist`. When you want to update the plist, run `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/your.plist` followed by the previous `bootout` command
    - 🤷 if you're on Windows
