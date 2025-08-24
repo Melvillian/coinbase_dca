@@ -32,19 +32,22 @@ If you don't have Poetry installed, [you can do that here](https://python-poetry
 
 This will execute the buy or sell for the specified dollar amount, based on your .env variables.
 
-## Building A Single Binary Executable, Suitable For A Cron Job
+## Building A Single Binary Executable, Suitable For A Cron Job (Linux) or LaunchD (Mac) to Execute Periodically
 
 On its own this script cannot implement DCA, because to correctly do DCA you need to sell/buy at a fixed interval (such as once a day) over a long time period. In order to make that as easy as possible, we can build a single binary executable that can be run directly by a cron job (or Mac's equivalent, launchd).
 
 ### Build Steps
 
-1. Install [pyinstaller](https://pyinstaller.org/en/stable/installation.html) with `pip install pyinstaller`
+1. Install [pyinstaller](https://pyinstaller.org/en/stable/installation.html) with `pip install pyinstaller`. We'll use this to bundle `main.py` with `python3` so that you have a single executable `main` function that a cron job can easily execute.
 
 2. From the project root, run `pyinstaller --add-data=".env:." --onefile coinbase_dca/main.py`. This will create a single executable at `dist/main`, which you can run from anywhere using `/path/to/dist/main`.
 
 3. Finally, execute your buy/sell periodically using either
 
    - [cron](https://phoenixnap.com/kb/set-up-cron-job-linux) if on Linux
-   - [launchd](https://alvinalexander.com/mac-os-x/mac-osx-startup-crontab-launchd-jobs/) if you're using a Mac
-      - tl;dr: make a plist file, and then run `launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/your.plist`. When you want to update the plist, run `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/your.plist` followed by the previous `bootout` command
+   - [launchd](https://ss64.com/mac/launchctl.html) if you're using a Mac
+      - tl;dr: make a [plist file](https://alvinalexander.com/mac-os-x/mac-osx-startup-crontab-launchd-jobs/), and then run `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/your.plist`. The script will now run according to the schedule set in your plist.
+      - When you want to update your Python code, simply run Step 2 above which will create an updated `main` executable that the launchctl script will run
+      - When you want to update your .plist (for example, if you want to change the schedule) simply update and save your .plist file, then run the `bootstrap` command from a couple steps above
+      - When you want to disable the script (because you want to stop buying/selling), run `launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/your.plist`
    - 🤷 if you're on Windows
