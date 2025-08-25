@@ -96,31 +96,40 @@ def dollar_cost_averaging_buy(client, product_id, amount_to_buy_in_usd):
 
 
 def main():
-    handle_bundled_load_dotenv()
-    api_key = os.getenv("API_KEY")
-    api_secret = os.getenv("API_SECRET")
-    ticker = os.getenv("TICKER")
-    dollar_amount_str = os.getenv("DOLLAR_AMOUNT")
-    is_buy = os.getenv("IS_BUY")
-    if dollar_amount_str is not None:
-        dollar_amount = int(dollar_amount_str)
-    else:
-        raise ValueError(
-            f"Invalid value for DOLLAR_AMOUNT: '{dollar_amount_str}'. Value must be an integer"
-        )
+    try:
+        handle_bundled_load_dotenv()
+        api_key = os.getenv("API_KEY")
+        api_secret = os.getenv("API_SECRET")
+        ticker = os.getenv("TICKER")
+        dollar_amount_str = os.getenv("DOLLAR_AMOUNT")
+        is_buy = os.getenv("IS_BUY")
+        if dollar_amount_str is not None:
+            dollar_amount = int(dollar_amount_str)
+        else:
+            raise ValueError(
+                f"Invalid value for DOLLAR_AMOUNT: '{dollar_amount_str}'. Value must be an integer"
+            )
 
-    client = RESTClient(api_key=api_key, api_secret=api_secret)
+        client = RESTClient(api_key=api_key, api_secret=api_secret)
 
-    if is_buy == "true":
-        # buy the coin
-        dollar_cost_averaging_buy(client, ticker, dollar_amount)
-    elif is_buy == "false":
-        # sell the coin
-        dollar_cost_averaging_sell(client, ticker, dollar_amount)
-    else:
-        raise ValueError(
-            f"Invalid value for IS_BUY: '{is_buy}'. Value must be true or false"
-        )
+        if is_buy == "true":
+            # buy the coin
+            dollar_cost_averaging_buy(client, ticker, dollar_amount)
+        elif is_buy == "false":
+            # sell the coin
+            dollar_cost_averaging_sell(client, ticker, dollar_amount)
+        else:
+            raise ValueError(
+                f"Invalid value for IS_BUY: '{is_buy}'. Value must be true or false"
+            )
+    except Exception as e:
+        # Print timestamp before any error stack trace
+        now = datetime.now()
+        print(now.strftime("%Y-%m-%d %H:%M:%S"))
+        error_msg = str(e)
+        print(f"ERROR: {error_msg}")
+        # Re-raise the exception to preserve the original stack trace
+        raise
 
 
 if __name__ == "__main__":
