@@ -46,8 +46,8 @@ On its own this script cannot implement DCA, because to correctly do DCA you nee
 
    - [cron](https://phoenixnap.com/kb/set-up-cron-job-linux) if on Linux
    - [launchd](https://ss64.com/mac/launchctl.html) if you're using a Mac
-      - tl;dr: make a [plist file](https://alvinalexander.com/mac-os-x/mac-osx-startup-crontab-launchd-jobs/), and then run `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/your.plist`. The script will now run according to the schedule set in your plist.
+      - tl;dr: make a [plist file](https://alvinalexander.com/mac-os-x/mac-osx-startup-crontab-launchd-jobs/), and then run `launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/your.plist && launchctl enable gui/$(id -u) com.alex.coinbase_dca`. The script will now run according to the schedule set in your plist.
       - When you want to update your Python code, simply run Step 2 above which will create an updated `main` executable that the launchctl script will run
-      - When you want to update your .plist (for example, if you want to change the schedule) simply update and save your .plist file, then run the `bootstrap` command from a couple steps above
+      - When you want to update your .plist (for example, if you want to change the schedule) simply update and save your .plist file, then run the `bootstrap + enable` command from a couple steps above
       - When you want to disable the script (because you want to stop buying/selling), run `launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/your.plist`
    - 🤷 if you're on Windows
