@@ -1,9 +1,10 @@
-from coinbase.rest import RESTClient
-from dotenv import load_dotenv
 import os
 import sys
-from json import dumps
 from datetime import datetime
+from json import dumps
+
+from coinbase.rest import RESTClient
+from dotenv import load_dotenv
 
 
 # This opaque looking function handles the vagaries of how Pyinstaller deals with bundling the .env
@@ -47,6 +48,7 @@ def dollar_cost_averaging_sell(client, product_id, amount_to_sell_in_usd):
     # use the coinbase python sdk to fetch the current price of BTC in USD
     resp = client.get_product(product_id)
     price_of_crypto_asset_in_usd = float(resp["price"])
+
     amount_to_sell_in_crypto_asset = "{:.6f}".format(  # round to 6 decimal places
         float(amount_to_sell_in_usd) / price_of_crypto_asset_in_usd
     )
@@ -62,9 +64,16 @@ def dollar_cost_averaging_sell(client, product_id, amount_to_sell_in_usd):
         base_size=amount_to_sell_in_crypto_asset,
     )
 
-    # log the current time and order data so we can debug if needed
+    # log the current time, price, and order data so we can debug if needed
     now = datetime.now()
     print(now.strftime("%Y-%m-%d %H:%M:%S"))
+    payment_symbol = product_id.split("-")[1]
+    if payment_symbol == "USD":
+        # Display the current price of the crypto asset being sold
+        crypto_symbol = product_id.split("-")[0]
+
+        formatted_price = f"${price_of_crypto_asset_in_usd:,.2f}"
+        print(f"Current {crypto_symbol} price: {formatted_price}")
     print(dumps(resp, indent=2))
 
 
